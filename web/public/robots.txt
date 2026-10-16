@@ -1,0 +1,11 @@
+# Sistema privado de gestão clínica. Nenhuma tela daqui é para busca — e a única que
+# estranhos abrem, a do auto-cadastro pelo link, é a que MAIS importa manter fora do
+# índice: o endereço público está na URL, e um buscador que a publique acaba com a
+# opacidade de que o desenho inteiro depende.
+#
+# Este arquivo é servido pelo host do SPA, que é quem responde por /cadastro/{slug}.
+# A mesma promessa é feita em três lugares, de propósito, porque cada um alcança um
+# rastreador diferente: a <meta name="robots"> do index.html, o cabeçalho X-Robots-Tag
+# das respostas da API, e este arquivo.
+User-agent: *
+Disallow: /

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- o iOS não lê SVG na tela inicial: o ícone de app da marca, quadrado (ele arredonda sozinho) -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Sistema privado de clínica: nenhuma tela é para busca. A porta pública do
+         cadastro por link também sai com `X-Robots-Tag` no servidor, para o rastreador
+         que não lê HTML. -->
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Ame Clínica</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

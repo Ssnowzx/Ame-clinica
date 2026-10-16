@@ -1,0 +1,22 @@
+-- Privilégio para o ISOLAMENTO por processo dos testes (change test-db-isolado, gatilho TEST-DB).
+--
+-- `php artisan test --parallel` (ParaTest) dá a cada worker um banco próprio, nomeado
+-- `ame_test_test_N`. Criar/dropar esses bancos exige privilégio de nível de SCHEMA
+-- (CREATE/DROP) — que o 01-test-db.sql (GRANT ALL ON ame_test.*) NÃO concede: aquele
+-- privilégio vale DENTRO de `ame_test`, não permite criar OUTROS bancos.
+--
+-- Não basta CREATE/DROP do banco: cada worker também MIGRA e roda os testes DENTRO do
+-- seu `ame_test_test_N` (CREATE TABLE, SELECT, INSERT, ...). O `01-test-db.sql` concede
+-- ALL só no literal `ame_test`, que NÃO cobre `ame_test_test_N`. Por isso ALL no padrão.
+--
+-- ESCOPO MÍNIMO — a trava de segurança é o ESCOPO, não a lista de privilégios: o grant
+-- cobre apenas `ame\_test%` — o `_` é ESCAPADO (`\_`) para casar o underscore LITERAL,
+-- então o padrão pega `ame_test`, `ame_test_test_1`, `ame_test_test_2`, ... e NUNCA
+-- `ame_clinica` (o banco de produção/demo). Jamais `ON *.*`: bancos de teste são
+-- descartáveis; produção fica intocada. (ALL em `db.*` não inclui GRANT OPTION nem
+-- privilégios administrativos globais — só o que se aplica a estes bancos.)
+--
+-- Só roda na PRIMEIRA inicialização do volume; num banco já existente aplique via root:
+--   docker exec -i ame-clinica-db mariadb -uroot -p"$DB_ROOT_PASSWORD" < docker/mariadb/init/02-test-grants.sql
+GRANT ALL PRIVILEGES ON `ame\_test%`.* TO 'ame'@'%';
+FLUSH PRIVILEGES;

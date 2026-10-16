@@ -1,0 +1,127 @@
+{
+    "campos": [
+        {
+            "campo": "nome",
+            "tamanho": 255,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "nome_social",
+            "tamanho": 255,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "nascimento",
+            "tamanho": null,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "sexo",
+            "tamanho": null,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "cpf",
+            "tamanho": null,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "convenio_id",
+            "tamanho": null,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "plano",
+            "tamanho": 255,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "carteirinha",
+            "tamanho": 60,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "carteirinha_validade",
+            "tamanho": null,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "necessidade",
+            "tamanho": null,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "indicacao",
+            "tamanho": 255,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "responsaveis_json",
+            "tamanho": null,
+            "tamanhos_dos_itens": {
+                "nome": 255,
+                "parentesco": 60,
+                "telefone": 20,
+                "email": 255
+            }
+        },
+        {
+            "campo": "contatos_json",
+            "tamanho": null,
+            "tamanhos_dos_itens": {
+                "valor": 255,
+                "obs": 255
+            }
+        },
+        {
+            "campo": "endereco_cep",
+            "tamanho": 9,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "endereco_logradouro",
+            "tamanho": 500,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "endereco_numero",
+            "tamanho": 20,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "endereco_complemento",
+            "tamanho": 255,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "endereco_bairro",
+            "tamanho": 150,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "endereco_cidade",
+            "tamanho": 150,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "endereco_uf",
+            "tamanho": null,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "estado_civil",
+            "tamanho": 20,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "profissao",
+            "tamanho": 255,
+            "tamanhos_dos_itens": []
+        },
+        {
+            "campo": "obs",
+            "tamanho": 2000,
+            "tamanhos_dos_itens": []
+        }
+    ]
+}

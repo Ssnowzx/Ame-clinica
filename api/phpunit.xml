@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+        <!--
+            Arquitetura: as GUARDAS de idioma. Não exercitam comportamento — varrem o FONTE e
+            reprovam a volta de um padrão que já custou caro (o `prohibited` que deixa a chave
+            nula passar; a whitelist do MENOR copiada fora da fonte única). É o que impede a
+            dívida de classe de ser re-armada pela próxima tela, sem depender de memória humana.
+            Não tocam o banco.
+        -->
+        <testsuite name="Arquitetura">
+            <directory>tests/Arquitetura</directory>
+        </testsuite>
+        <!--
+            Concorrência: os testes que provam LOCK precisam de dados COMMITADOS, porque a
+            prova exige uma SEGUNDA CONEXÃO. O RefreshDatabase (Feature) envolve cada teste
+            numa transação — e nada do que ele escreve existe para outra conexão. Daí a suíte
+            separada, com migrate:fresh por teste (lento e correto, em vez de rápido e falso).
+        -->
+        <testsuite name="Concorrencia">
+            <directory>tests/Concorrencia</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="BROADCAST_CONNECTION" value="null"/>
+        <env name="CACHE_STORE" value="array"/>
+        <!-- Testes de API rodam contra MariaDB (design D6) — valores casam com os
+             defaults do docker-compose.yml da raiz (database ame_test, loopback:3312) -->
+        <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3312"/>
+        <env name="DB_DATABASE" value="ame_test"/>
+        <env name="DB_USERNAME" value="ame"/>
+        <env name="DB_PASSWORD" value="ame_local"/>
+        <env name="DB_URL" value=""/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="NIGHTWATCH_ENABLED" value="false"/>
+    </php>
+</phpunit>

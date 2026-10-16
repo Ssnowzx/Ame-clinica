@@ -1,0 +1,5 @@
+# A API não tem página para indexar, e a rota pública do auto-cadastro responde JSON
+# com X-Robots-Tag. "Disallow:" vazio, que estava aqui antes, é a diretiva explícita de
+# PERMITIR TUDO — o contrário do que a documentação desta casa afirmava.
+User-agent: *
+Disallow: /

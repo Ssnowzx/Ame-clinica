@@ -1,0 +1,269 @@
+{
+    "tipos_telefonicos": [
+        "telefone",
+        "celular",
+        "whatsapp"
+    ],
+    "casos": [
+        {
+            "entrada": "(11) 98765-4321",
+            "forma": "+5511987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "11987654321",
+            "forma": "+5511987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "5511987654321",
+            "forma": "+5511987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+55 11 98765-4321",
+            "forma": "+5511987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": " 11 9 8765 4321 ",
+            "forma": "+5511987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+55 (49) 99123-4567",
+            "forma": "+5549991234567",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "(11) 3333-4444",
+            "forma": "+551133334444",
+            "tipo": "fixo"
+        },
+        {
+            "entrada": "551133334444",
+            "forma": "+551133334444",
+            "tipo": "fixo"
+        },
+        {
+            "entrada": "(49) 3222-1234",
+            "forma": "+554932221234",
+            "tipo": "fixo"
+        },
+        {
+            "entrada": "(49) 2222-1234",
+            "forma": "+554922221234",
+            "tipo": "fixo"
+        },
+        {
+            "entrada": "(49) 5222-1234",
+            "forma": "+554952221234",
+            "tipo": "fixo"
+        },
+        {
+            "entrada": "(49) 6123-4567",
+            "forma": "+554961234567",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "(11) 8765-4321",
+            "forma": "+551187654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "554981234567",
+            "forma": "+554981234567",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "5533334444",
+            "forma": "+555533334444",
+            "tipo": "fixo"
+        },
+        {
+            "entrada": "55987654321",
+            "forma": "+5555987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "5555987654321",
+            "forma": "+5555987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "55 49912-3456",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(55) 49912-3456",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(49) 49912-3456",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "49 99912-34567",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "44 7712-345678",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(49) 9123-456",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "98765-4321",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "3333-4444",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(01) 98765-4321",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(10) 98765-4321",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(11) 88765-4321",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(11) 1333-4444",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "(11) 0333-4444",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "005511987654321",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "55 11 98765-43210",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "não tenho",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "whatsapp 49 99123-4567",
+            "forma": "+5549991234567",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "   ",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "+44 7700 900123",
+            "forma": "+447700900123",
+            "tipo": "celular"
+        },
+        {
+            "entrada": " +44 7700 900123 ",
+            "forma": "+447700900123",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+351 912 345 678",
+            "forma": "+351912345678",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+1 202 555 0101",
+            "forma": "+12025550101",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+44 7700 9",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "+44 770 090",
+            "forma": "+44770090",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+44 7700 900123 456",
+            "forma": "+447700900123456",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+44 7700 900123 4567",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "+44 7700",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "447700900123",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "+0 44 7700 900123",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "‪+44 7700 900123‬",
+            "forma": "+447700900123",
+            "tipo": "celular"
+        },
+        {
+            "entrada": " ⁦+351 912 345 678⁩",
+            "forma": "+351912345678",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "‪(11) 98765-4321‬",
+            "forma": "+5511987654321",
+            "tipo": "celular"
+        },
+        {
+            "entrada": "+55 49912-3456",
+            "forma": null,
+            "tipo": null
+        },
+        {
+            "entrada": "+55 11 3333-4444",
+            "forma": "+551133334444",
+            "tipo": "fixo"
+        }
+    ]
+}

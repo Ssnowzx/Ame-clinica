@@ -1,0 +1,773 @@
+@import "tailwindcss";
+
+/* ════════════════════════════════════════════════════════════════════
+   Ame Clínica · Design System v1.0.0 — FONTE ÚNICA dos tokens visuais
+   Nível 1 (primitivos): IMUTÁVEL — nunca consumido por componente.
+   Nível 2 (semânticos): o único nível que telas/componentes tocam.
+   Dark mode v1: NÃO (decisão registrada) — quando entrar, um bloco
+   [data-theme="dark"] redefine SÓ o nível 2.
+   Tema de CLÍNICA (change tema-da-clinica): um bloco [data-tema="…"] redefine papéis do
+   nível 2 e as escalas de forma (raio, sombra, fonte) — nunca texto, superfície do
+   conteúdo nem cores de aviso. O Padrão é a ausência do atributo.
+   ════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Plus Jakarta Sans Var";
+  src: url("./estilos/fontes/plus-jakarta-sans-var.woff2") format("woff2");
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+/* a fonte arredondada do tema Menta (changes tema-da-clinica e tema-menta): Nunito, licença OFL, só o
+   recorte latino (cobre o português inteiro). Embarcada como a outra — zero download externo,
+   CSP intacta — e o navegador só a busca quando o tema a usa: no Padrão não se paga nada. */
+@font-face {
+  font-family: "Nunito Var";
+  src: url("./estilos/fontes/nunito-var.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+/* as fontes da marca Xclinicas (change tema-xclinicas): Manrope no texto e na interface, Newsreader
+   nos títulos — as duas do manual de marca v1, licença OFL, recorte latino, variáveis no eixo de peso.
+   Embarcadas como as outras, e baixadas só por quem usa o tema (o login, que é da marca do produto,
+   é quem mais as pede). */
+@font-face {
+  font-family: "Manrope Var";
+  src: url("./estilos/fontes/manrope-var.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Newsreader Var";
+  src: url("./estilos/fontes/newsreader-var.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+:root {
+  /* ── Nível 1 · neutros quentes (matiz ~82–85° OKLCH) ── */
+  --neutro-0: #FFFFFF;   --neutro-50: #FAF9F7;  --neutro-100: #F1EFEB;
+  --neutro-200: #E5E2DC; --neutro-300: #D3CFC7; --neutro-400: #A9A49B;
+  --neutro-450: #8F8A80; --neutro-500: #837E74; --neutro-600: #5F5A51;
+  --neutro-700: #494540; --neutro-800: #32302B; --neutro-900: #211F1B;
+
+  /* ── Nível 1 · marca (verde-petróleo) ── */
+  --marca-50: #EDF7F5;  --marca-100: #D6EDE9; --marca-200: #ADDCD5;
+  --marca-300: #7CC3BA; --marca-400: #47A399; --marca-500: #23867C;
+  --marca-600: #16695F; --marca-700: #10554E; --marca-800: #0D443F; --marca-900: #0B3733;
+  /* a marca CLARA E ACINZENTADA (claridade 0,86, croma 0,035 no OKLCH): o tom recessivo dos gráficos,
+     o "resto" ao lado do valor em destaque (change indicadores-profissionais, DQ-01) */
+  --marca-cinza-200: #B9D9D3;
+  /* uma SEQUÊNCIA de cinco degraus no tom da marca, do quase branco (encosta na superfície) ao verde
+     médio: a escala do mapa de ocupação (DQ-02). Mesma claridade OKLCH degrau a degrau nos dois temas
+     (0,965 · 0,885 · 0,765 · 0,625 · 0,48); conferida pelo validador da skill de gráficos */
+  --marca-sequencia-1: #EBF6F4; --marca-sequencia-2: #C0E1DC; --marca-sequencia-3: #80C1B7;
+  --marca-sequencia-4: #42988D; --marca-sequencia-5: #126C63;
+
+  /* ── Nível 1 · tema Menta (change tema-da-clinica; renomeado em tema-menta) — menta e rosa ──
+     Menta: as letras (#7FE6C4) e o contorno delas (#00A884). O menta é PREENCHIMENTO (botões),
+     sempre com texto verde-escuro por cima — com texto branco nenhum menta passa de 2:1.
+     O verde que vira TEXTO é o contorno escurecido até AA (#007A5E = 5,3:1 no branco).
+     Rosa: o do cérebro (#F7A8C4) e o do slogan (#E0457B); o escuro (#B8255A) é o que vira texto.
+     Só os blocos `[data-tema]` leem estes primitivos. */
+  --mt-menta-50: #EFFAF6;  --mt-menta-100: #DDF4EB; --mt-menta-200: #BDEBDA;
+  --mt-menta-300: #86D3B8; --mt-menta-400: #6ADBB6; --mt-menta-500: #4FCFA6;
+  --mt-verde-500: #05D1A5; --mt-verde-700: #007A5E; --mt-verde-800: #05614D; --mt-verde-900: #06463A;
+  --mt-verde-cinza: #5F9282;
+  --mt-rosa-200: #F7A8C4; --mt-rosa-500: #E0457B; --mt-rosa-700: #B8255A;
+  /* o azul-claro da nuvem: só no fio da assinatura (o amarelo da estrela fica de fora — amarelo já
+     quer dizer ALERTA nesta casa, e um amarelo decorativo ensinaria o contrário) */
+  --mt-azul-nuvem: #9BCBED;
+  /* os gráficos no verde da logo (change indicadores-profissionais): o recessivo é o verde da logo
+     CLARO E ACINZENTADO (o #BCDACD do desenho aprovado, claridade 0,86 e croma 0,037 no OKLCH), e a
+     sequência do mapa de ocupação vai do quase branco ao verde médio (#116E56 ≈ o #0B6E55 aprovado),
+     nas mesmas claridades da sequência do Padrão */
+  --mt-verde-cinza-200: #BCDACD;
+  --mt-sequencia-1: #ECF6F2; --mt-sequencia-2: #C1E2D5; --mt-sequencia-3: #83C2AC;
+  --mt-sequencia-4: #459A7F; --mt-sequencia-5: #116E56;
+  --mt-desativado: #E7EFEB;
+  /* a moldura (barra lateral e do topo), as linhas e o fundo, todos com um toque de menta */
+  --mt-moldura: #EAF8F2; --mt-moldura-linha: #C9EBDD; --mt-moldura-hover: #DDF3EA;
+  --mt-fundo: #F3FAF7; --mt-linha: #DCEEE6; --mt-linha-forte: #C5E2D6;
+
+  /* ── Nível 1 · tema Xclinicas (change tema-xclinicas) — o manual de marca v1 do PRODUTO ──
+     Ameixa (#6B3559) é a cor principal: 9,2:1 com texto branco. Rosé (#E49A86) é ornamento — o
+     losango — e nunca texto nem marcador: no branco dá 2,3:1. O marcador "onde você está" é o rosé
+     APROFUNDADO no mesmo matiz (#C36952, 3,8:1). Papel (#FAF6F6) é o fundo. Os tons claros saem do
+     matiz da ameixa (341° no OKLCH), e a sequência do mapa repete as claridades da do Padrão. */
+  --xc-ameixa: #6B3559; --xc-ameixa-intensa: #52263F; --xc-ameixa-clara: #C98DB4;
+  --xc-rose: #E49A86; --xc-rose-fundo: #C36952;
+  --xc-papel: #FAF6F6; --xc-moldura: #F4ECEF; --xc-moldura-hover: #EFE3E9;
+  --xc-linha: #EADFE4; --xc-linha-forte: #D9C8D1; --xc-borda: #8F7886;
+  --xc-suave: #F7EEF2; --xc-selecao: #F1DDE7; --xc-hover: #F9F3F6; --xc-trilho: #F3E9EE;
+  --xc-desativado: #F3EEF1;
+  --xc-recessivo: #E2C8D8;
+  --xc-sequencia-1: #FAF0F6; --xc-sequencia-2: #EAD1E0; --xc-sequencia-3: #CEA4BE;
+  --xc-sequencia-4: #AF7D9D; --xc-sequencia-5: #7F486D;
+
+  /* ── Nível 1 · feedback (tom suave §2: fundo suave + texto forte) ── */
+  --vermelho-600: #B3372E; --vermelho-700: #992F27;
+  --vermelho-texto: #8F2B23; --vermelho-suave: #FBEEEC;
+  --verde-texto: #1D6B41;   --verde-suave: #EAF5EE;
+  --ambar-texto: #8A5A00;   --ambar-suave: #FCF3E1;
+  --azul-texto: #1D5C96;    --azul-suave: #EBF3FB;
+
+  /* ── Escalas físicas (papel, não valor) ── */
+  --raio-controle: 6px; --raio-campo: 8px; --raio-superficie: 12px;
+  --raio-janela: 16px;  --raio-pilula: 999px;
+  /* a ponta da MARCA DE DADO (barra e coluna dos gráficos): 4px, arredondada na ponta e reta na base,
+     em qualquer tema — a régua da skill de gráficos, não um raio de caixa (DQ-16) */
+  --raio-marca-de-dado: 4px;
+  --sombra-e1: 0 1px 2px 0 rgb(33 31 27 / 0.05);
+  --sombra-e2: 0 2px 8px -1px rgb(33 31 27 / 0.08), 0 1px 2px 0 rgb(33 31 27 / 0.04);
+  --sombra-e3: 0 16px 40px -8px rgb(33 31 27 / 0.16), 0 4px 12px -2px rgb(33 31 27 / 0.06);
+  /* menu ACIMA do diálogo (55 > 50): um dropdown portaled aberto DENTRO de um Dialog
+     (Mais ações, chip de status) precisa ficar na frente, não atrás da janela.
+     fixo-canto (11 > 10): o canto duplamente sticky de uma grade (Horário) cruza os
+     cabeçalhos de coluna ao rolar — no mesmo z, quem vem depois no DOM cobriria o canto. */
+  --z-fixo: 10; --z-fixo-canto: 11; --z-scrim: 40; --z-dialogo: 50; --z-menu: 55; --z-toast: 60; --z-tooltip: 70;
+  --duracao-1: 100ms; --duracao-2: 160ms; --duracao-3: 220ms;
+
+  --curva-padrao: cubic-bezier(0.2, 0, 0, 1);
+  --curva-saida: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ── Nível 2 · papéis semânticos (tema claro — único do v1) ── */
+
+  /* ── Layout ──
+     A MOLDURA DO SHELL em volta do conteúdo da página, para quem precisa de altura CONTIDA
+     (a agenda e as mensagens rolam por DENTRO em vez de esticar o documento).
+
+     Nível 2 e não 1 de propósito: o cabeçalho deste arquivo diz que primitivo "nunca é
+     consumido por componente", e este É — foi o gate que apontou a contradição.
+
+     MEDIDA, não estimada (2026-08-26): 88px acima (topo do `main` em 76 + o `p-3` dele) e
+     24px abaixo (`p-3` do `main` + `p-3` da raiz do shell). Aferida por varredura: com 108px
+     o documento ainda transborda, com 112px fecha exato na viewport.
+
+     ⚠️ ELA DEPENDE DA ALTURA DO `<header>` DO SHELL, que é dirigida por conteúdo. No celular,
+     com os contadores reais, ele tem 68px, não 52 — e as telas contidas rolavam 16px (medido em
+     produção, change `conversa-legivel`). Por isso o `app-shell` MEDE o cabeçalho e sobrescreve
+     este token em tempo de execução (`usar-moldura-do-shell.ts`); o `7rem` abaixo vale antes da
+     medida e no jsdom, que não calcula layout.
+     O que a suíte guarda é a DUPLICAÇÃO (ver `moldura-do-shell.contrato.test.ts`), porque foi
+     ela que mordeu: `pagina-mensagens` tinha uma cópia própria, errada em 12px. */
+  --moldura-do-shell: 7rem;
+
+  /* O RESPIRO do shell — o `p-3` da raiz, em cima e embaixo. É o que a barra lateral desconta
+     da viewport para ser um cartão de altura cheia com folga.
+     Medida DIFERENTE da moldura acima (esta não inclui o cabeçalho), e por isso token próprio.
+     Estava cru em `app-shell` como `calc(100vh-1.5rem)` — mesma classe de defeito que os 12px
+     da `pagina-mensagens`, só que ainda não tinha mordido. A guarda de contrato o encontrou. */
+  --respiro-do-shell: 1.5rem;
+  --fundo: var(--neutro-50);
+  --superficie: var(--neutro-0);
+  --superficie-elevada: var(--neutro-0);
+  --texto: var(--neutro-900);
+  --texto-suave: var(--neutro-600);
+  --texto-desativado: var(--neutro-400);
+  --neutro-desativado: var(--neutro-100);
+  --linha: var(--neutro-200);
+  --linha-forte: var(--neutro-300);
+  --borda-campo: var(--neutro-450);
+  --acento: var(--marca-600);
+  --acento-intenso: var(--marca-700);
+  --sobre-acento: var(--neutro-0);
+  --acento-suave: var(--marca-50);
+  --selecao: var(--marca-100);
+  --foco: var(--marca-600);
+  /* "Onde você está": o marcador de POSIÇÃO (item ativo do menu, profissional escolhido, aba
+     ativa, a linha do agora, o dia de hoje). Só traço, nunca texto: o texto vizinho segue no
+     acento. No Padrão é o próprio acento — nenhuma clínica vê diferença (change tema-da-clinica). */
+  --destaque: var(--acento);
+  /* A ASSINATURA da clínica: um fio decorativo no alto da barra lateral. Não carrega
+     informação (nada depende dele para ser entendido) — por isso não tem régua de contraste.
+     No Padrão não existe. */
+  --assinatura: none;
+  /* A MOLDURA do shell — a barra lateral e a barra do topo, o que emoldura o trabalho. No Padrão
+     é a própria superfície; um tema pode tingi-la (change tema-da-clinica). O CONTEÚDO (agenda,
+     cartões, formulários) fica sempre na superfície branca: é ali que o profissional lê o dia. */
+  --moldura: var(--superficie);
+  --moldura-linha: var(--linha);
+  --moldura-ativo: var(--acento-suave);
+  --moldura-hover: var(--neutro-100);
+  --rotulo-de-grupo: var(--texto-suave);
+  /* O BOTÃO PRINCIPAL tem papel próprio: no Padrão é o acento, mas um tema pode preenchê-lo com
+     uma cor clara e texto escuro — e o acento continua sendo a cor de TEXTO (links, item ativo). */
+  --botao-primario: var(--acento);
+  --botao-primario-hover: var(--acento-intenso);
+  --sobre-botao-primario: var(--sobre-acento);
+  --botao-primario-sombra: 0 0 #0000;
+  /* o ORNAMENTO depois do rótulo e a ELEVAÇÃO no hover (change tema-xclinicas): no Padrão, nada —
+     `none` não cria o pseudo-elemento e 0px não move. A cor do ornamento é `--losango`. */
+  --botao-primario-losango: none;
+  --botao-primario-elevacao: 0px;
+  --losango: transparent;
+  --borda-botao: var(--borda-campo);
+  --raio-botao: var(--raio-controle);
+  /* a CAIXA de marcar tem raio próprio: com o raio de controle de um tema mais macio ela vira um
+     círculo, e caixa redonda é lida como opção única (rádio) — o significado muda junto */
+  --raio-caixa: var(--raio-controle);
+  /* o controle segmentado (Dia / Semana / Visão geral): o trilho e a opção escolhida */
+  --trilho: var(--neutro-100);
+  --segmento-ativo: var(--acento);
+  --segmento-ativo-hover: var(--acento-intenso);
+  --sobre-segmento-ativo: var(--sobre-acento);
+  --cabecalho-tabela: var(--fundo);
+  /* o ícone do estado vazio ("Nenhum agendamento neste período"): no Padrão é só o desenho; um
+     tema pode pousá-lo numa bolha (respiro 0 + fundo transparente = exatamente o Padrão) */
+  --vazio-icone: var(--texto-suave);
+  --vazio-icone-fundo: transparent;
+  --vazio-icone-respiro: 0px;
+  /* peças que, no tema, não podem ficar no cinza quente do Padrão: o fundo do avatar de iniciais,
+     o hover de linha de lista e tabela, e o selo de marca (avatar do topo, contadores) */
+  --avatar-fundo: var(--neutro-100);
+  --hover-de-linha: var(--neutro-100);
+  --chip-de-marca: var(--acento-suave);
+  --sobre-chip-de-marca: var(--acento);
+  /* a opção escolhida do segmento ganha contorno no tema (pílula branca sobre trilho claro não se
+     distingue só pela cor — gate r2, BLOQ-1); no Padrão o preenchimento sólido basta */
+  --segmento-ativo-borda: transparent;
+  --raio-trilho: var(--raio-controle);
+  /* o recuo do fio do item ativo: com a pílula de cantos macios, o fio encostava na curva */
+  --recuo-fio: 0px;
+  /* a tipografia, que um tema pode trocar */
+  --fonte-texto: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fonte-display: "Plus Jakarta Sans Var", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --peso-texto: 400;
+  /* o peso do TÍTULO na fonte variável (change tema-xclinicas): `normal` = o peso que a classe pede.
+     Um `font-weight` na regra base de h1–h3 (fora de camada) venceria os utilitários em todo tema;
+     o eixo da fonte variável só age onde o tema o fixa. */
+  --variacao-display: normal;
+  --perigo: var(--vermelho-600);
+  --perigo-intenso: var(--vermelho-700);
+  --sobre-perigo: var(--neutro-0);
+  --perigo-texto: var(--vermelho-texto);
+  --perigo-suave: var(--vermelho-suave);
+  --sucesso-texto: var(--verde-texto);
+  --sucesso-suave: var(--verde-suave);
+  --alerta-texto: var(--ambar-texto);
+  --alerta-suave: var(--ambar-suave);
+  --info-texto: var(--azul-texto);
+  --info-suave: var(--azul-suave);
+  --tooltip: var(--neutro-800);
+  --sobre-tooltip: var(--neutro-0);
+
+  /* ── GRÁFICOS (change indicadores-profissionais) ──
+     Uma família de cor só — a da marca —, porque os gráficos dos indicadores medem UMA coisa por
+     vez (a forma "ênfase" da skill de gráficos: um em destaque, o resto apagado).
+     - DESTAQUE: o valor que importa, no acento — é ele que chama o olho.
+     - RECESSIVO: o resto, num tom CLARO E ACINZENTADO da marca (claridade ≈0,86, croma ≤0,04). Fica
+       abaixo de 3:1 no branco DE PROPÓSITO: todo gráfico com ele leva o valor escrito ao lado da
+       marca e a tabela equivalente (o alívio que a skill exige). Contra o destaque, ≥ 3:1.
+     - MAPA 1–5: a sequência do mapa de ocupação, do quase branco (pouco, quase sem tinta) ao verde
+       médio (muito). Sequencial, então o degrau 1 encosta na superfície — o 0% não "pinta". Rótulo
+       dentro da célula: `texto` nos degraus 1–4 e `sobre-acento` no 5 (todos ≥ 4,5:1).
+     - SEM DADOS: a hachura (traço claro) e o CONTORNO tracejado com ≥ 3:1 na superfície (A11Y-IND-05)
+       — a marca de "sem medida" precisa se ver como objeto, não só como textura. */
+  --grafico-destaque: var(--acento);
+  --grafico-recessivo: var(--marca-cinza-200);
+  --grafico-mapa-1: var(--marca-sequencia-1);
+  --grafico-mapa-2: var(--marca-sequencia-2);
+  --grafico-mapa-3: var(--marca-sequencia-3);
+  --grafico-mapa-4: var(--marca-sequencia-4);
+  --grafico-mapa-5: var(--marca-sequencia-5);
+  --grafico-sem-dados-traco: var(--linha);
+  --grafico-sem-dados-contorno: var(--borda-campo);
+}
+
+/* ── Tema Menta (change tema-da-clinica; renomeado na change tema-menta: tema não leva nome de clínica) ──
+   Um VISUAL, não só uma cor: a fonte arredondada da logo, cantos mais macios, botões em menta
+   com texto verde-escuro, sombras com um toque de verde, a moldura e o fundo levemente menta e o
+   rosa marcando "onde você está". O que NÃO muda é o que o profissional lê o dia inteiro: a
+   superfície branca do conteúdo, o texto e as cores de aviso (erro, sucesso, alerta).
+   Quem liga é `clinica.tema`, dado da clínica; quem aplica o atributo no `<html>` é
+   `usarTemaDaClinica`, preso ao ciclo de vida do shell (o login nunca o herda). O seletor vale
+   para QUALQUER elemento: a escolha em Configurações desenha cada opção numa amostra. A guarda
+   `tema-da-clinica.contrato.test.ts` confere o contraste de cada par texto × fundo daqui. */
+[data-tema="menta"] {
+  /* cor de marca */
+  --acento: var(--mt-verde-700);
+  --acento-intenso: var(--mt-verde-800);
+  --acento-suave: var(--mt-menta-50);
+  --selecao: var(--mt-menta-100);
+  --foco: var(--mt-verde-700);
+  --destaque: var(--mt-rosa-500);
+  /* do menta ao rosa da logo, PASSANDO pelo azul da nuvem e misturando em OKLCH: em sRGB o meio vira
+     cinza; sem a parada azul, o OKLCH toma o caminho curto e atravessa oliva e âmbar (gate r2) */
+  --assinatura: linear-gradient(90deg in oklch, var(--mt-verde-500), var(--mt-menta-400) 30%, var(--mt-azul-nuvem) 55%, var(--mt-rosa-200) 78%, var(--mt-rosa-500));
+  /* botões: menta da logo com texto verde-escuro (6,4:1), um relevo de 2px embaixo como o das
+     letras da logo, e a forma de pílula */
+  --botao-primario: var(--mt-menta-400);
+  --botao-primario-hover: var(--mt-menta-500);
+  --sobre-botao-primario: var(--mt-verde-900);
+  --botao-primario-sombra: inset 0 -2px 0 rgb(6 70 58 / 0.16), 0 2px 8px -2px rgb(0 140 110 / 0.35);
+  --botao-primario-losango: none;
+  --botao-primario-elevacao: 0px;
+  --losango: transparent;
+  --variacao-display: normal;
+  /* a borda do botão secundário é a mesma do campo (3,6:1): com o menta claro (1,75:1) o botão sem
+     preenchimento era lido como rótulo, e o seletor de data tinha duas bordas na mesma peça */
+  --borda-botao: var(--mt-verde-cinza);
+  --raio-botao: var(--raio-pilula);
+  --raio-caixa: 6px;
+  /* campos e linhas: a borda do campo é um verde-acinzentado com 3,6:1 (o mínimo de controle é 3) */
+  --borda-campo: var(--mt-verde-cinza);
+  --linha: var(--mt-linha);
+  --linha-forte: var(--mt-linha-forte);
+  --trilho: var(--mt-moldura-hover);
+  /* a opção escolhida vira uma pílula BRANCA levantada sobre o trilho menta, texto no verde */
+  --segmento-ativo: var(--neutro-0);
+  --segmento-ativo-hover: var(--neutro-0);
+  --sobre-segmento-ativo: var(--mt-verde-700);
+  --cabecalho-tabela: var(--mt-menta-50);
+  --segmento-ativo-borda: var(--mt-verde-700);
+  --raio-trilho: 16px;
+  --avatar-fundo: var(--mt-menta-50);
+  /* o hover de linha é o menta mais claro: precisa se distinguir da SELEÇÃO (#DDF4EB), senão a
+     conversa sob o mouse fica igual à escolhida (gate r3) */
+  --hover-de-linha: var(--mt-menta-50);
+  --neutro-desativado: var(--mt-desativado);
+  /* o selo de marca (avatar do topo, contador da lista de espera, "novidades") num menta que se vê
+     sobre a moldura, com o texto verde-escuro (8,3:1) */
+  --chip-de-marca: var(--mt-menta-200);
+  --sobre-chip-de-marca: var(--mt-verde-900);
+  --recuo-fio: 6px;
+  /* o estado vazio ganha uma bolha menta com o ícone no verde: o "nada por aqui" fica gentil */
+  --vazio-icone: var(--mt-verde-700);
+  --vazio-icone-fundo: var(--mt-menta-100);
+  --vazio-icone-respiro: 14px;
+  /* moldura e fundo */
+  --fundo: var(--mt-fundo);
+  --moldura: var(--mt-moldura);
+  --moldura-linha: var(--mt-moldura-linha);
+  /* o item ativo vira uma pílula BRANCA sobre a moldura menta: o "onde estou" salta sem cor nova */
+  --moldura-ativo: var(--neutro-0);
+  --moldura-hover: var(--mt-moldura-hover);
+  /* os títulos dos grupos do menu no rosa da logo, escurecido até ser texto legível (5,6:1) */
+  --rotulo-de-grupo: var(--mt-rosa-700);
+  /* forma: cantos mais macios, sombras com tom de verde no lugar do cinza */
+  --raio-controle: 10px;
+  --raio-campo: 12px;
+  --raio-superficie: 18px;
+  --raio-janela: 22px;
+  --sombra-e1: 0 1px 2px 0 rgb(6 70 58 / 0.07);
+  --sombra-e2: 0 4px 14px -4px rgb(6 70 58 / 0.14), 0 1px 2px 0 rgb(6 70 58 / 0.05);
+  --sombra-e3: 0 22px 48px -14px rgb(6 70 58 / 0.26), 0 4px 12px -2px rgb(6 70 58 / 0.08);
+  /* tipografia: a Nunito, arredondada como as letras da logo, um pouco mais encorpada no texto */
+  --fonte-texto: "Nunito Var", ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --fonte-display: "Nunito Var", ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --peso-texto: 500;
+  /* a Nunito é mais leve que a fonte do Padrão no mesmo número: no tema, cada peso nomeado sobe um
+     grau, e o título fica encorpado como as letras da logo (os utilitários do Tailwind leem estes) */
+  --font-weight-normal: 500;
+  --font-weight-medium: 600;
+  --font-weight-semibold: 700;
+  /* os gráficos no verde da logo: o recessivo acinzentado do desenho aprovado e a sequência do mapa
+     nas mesmas claridades da do Padrão */
+  --grafico-recessivo: var(--mt-verde-cinza-200);
+  --grafico-mapa-1: var(--mt-sequencia-1);
+  --grafico-mapa-2: var(--mt-sequencia-2);
+  --grafico-mapa-3: var(--mt-sequencia-3);
+  --grafico-mapa-4: var(--mt-sequencia-4);
+  --grafico-mapa-5: var(--mt-sequencia-5);
+}
+
+/* ── Tema Xclinicas (change tema-xclinicas) ──
+   A marca do PRODUTO, oferecida a toda clínica: o manual de marca v1 levado à tela. Ameixa no acento
+   e no botão principal — pílula com o losango rosé depois do rótulo e que sobe 2px no hover, como o
+   botão do manual —, fundo papel, moldura num rosado-ameixa claro, títulos na Newsreader 500 e a
+   interface na Manrope, cartões com 16px de canto (o do manual) e sombras no tom da tinta. O que NÃO
+   muda é o que se lê o dia inteiro: a superfície branca, o texto e as cores de aviso. */
+[data-tema="xclinicas"] {
+  /* cor de marca */
+  --acento: var(--xc-ameixa);
+  --acento-intenso: var(--xc-ameixa-intensa);
+  --acento-suave: var(--xc-suave);
+  --selecao: var(--xc-selecao);
+  --foco: var(--xc-ameixa);
+  --destaque: var(--xc-rose-fundo);
+  /* a assinatura: os quatro caminhos do X chegando ao ponto — ameixa, ameixa clara e o rosé */
+  --assinatura: linear-gradient(90deg in oklch, var(--xc-ameixa), var(--xc-ameixa-clara) 60%, var(--xc-rose));
+  /* o botão principal do manual: ameixa, rótulo branco (9,2:1), escurece e sobe no hover, e o
+     losango rosé como "ponto de chegada" */
+  --botao-primario: var(--xc-ameixa);
+  --botao-primario-hover: var(--xc-ameixa-intensa);
+  --sobre-botao-primario: var(--neutro-0);
+  --botao-primario-sombra: 0 1px 0 rgb(42 26 38 / 0.2), 0 6px 16px -8px rgb(107 53 89 / 0.55);
+  --botao-primario-losango: "";
+  --botao-primario-elevacao: 2px;
+  --losango: var(--xc-rose);
+  --borda-botao: var(--xc-borda);
+  --raio-botao: var(--raio-pilula);
+  --raio-caixa: 6px;
+  /* campos e linhas: a borda do campo tem 4,0:1 no branco; a linha é a do manual */
+  --borda-campo: var(--xc-borda);
+  --linha: var(--xc-linha);
+  --linha-forte: var(--xc-linha-forte);
+  --trilho: var(--xc-trilho);
+  /* a opção escolhida é uma pílula ameixa, com o contorno da mesma cor (7,8:1 no trilho) */
+  --segmento-ativo: var(--xc-ameixa);
+  --segmento-ativo-hover: var(--xc-ameixa-intensa);
+  --sobre-segmento-ativo: var(--neutro-0);
+  --segmento-ativo-borda: var(--xc-ameixa);
+  --raio-trilho: var(--raio-pilula);
+  --cabecalho-tabela: var(--xc-suave);
+  --avatar-fundo: var(--xc-trilho);
+  /* o hover de linha é o mais claro dos rosados: 1,18:1 contra a seleção, para não parecer escolhido */
+  --hover-de-linha: var(--xc-hover);
+  --neutro-desativado: var(--xc-desativado);
+  --chip-de-marca: var(--xc-selecao);
+  --sobre-chip-de-marca: var(--xc-ameixa-intensa);
+  --recuo-fio: 6px;
+  /* o estado vazio numa bolha rosada, com o ícone em ameixa */
+  --vazio-icone: var(--xc-ameixa);
+  --vazio-icone-fundo: var(--xc-trilho);
+  --vazio-icone-respiro: 14px;
+  /* moldura e fundo: o papel do manual no fundo, a moldura um grau mais rosada */
+  --fundo: var(--xc-papel);
+  --moldura: var(--xc-moldura);
+  --moldura-linha: var(--xc-linha);
+  --moldura-ativo: var(--neutro-0);
+  --moldura-hover: var(--xc-moldura-hover);
+  /* os títulos dos grupos do menu em ameixa, como os números de seção do manual (7,9:1) */
+  --rotulo-de-grupo: var(--xc-ameixa);
+  /* forma: os 16px dos cartões do manual, pílulas nos controles, sombras no tom da tinta */
+  --raio-controle: 10px;
+  --raio-campo: 10px;
+  --raio-superficie: 16px;
+  --raio-janela: 20px;
+  --sombra-e1: 0 1px 2px 0 rgb(42 26 38 / 0.06);
+  --sombra-e2: 0 4px 14px -4px rgb(42 26 38 / 0.12), 0 1px 2px 0 rgb(42 26 38 / 0.05);
+  --sombra-e3: 0 22px 48px -14px rgb(42 26 38 / 0.24), 0 4px 12px -2px rgb(42 26 38 / 0.08);
+  /* tipografia: Manrope na interface (500–800, como pede o manual) e Newsreader 500 nos títulos */
+  --fonte-texto: "Manrope Var", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fonte-display: "Newsreader Var", Georgia, "Times New Roman", serif;
+  --peso-texto: 500;
+  --font-weight-normal: 500;
+  --font-weight-medium: 600;
+  --font-weight-semibold: 700;
+  --variacao-display: "wght" 500;
+  /* os gráficos na escala da ameixa: o recessivo claro e acinzentado (5,9:1 contra o destaque) e a
+     sequência do mapa nas claridades da do Padrão */
+  --grafico-recessivo: var(--xc-recessivo);
+  --grafico-mapa-1: var(--xc-sequencia-1);
+  --grafico-mapa-2: var(--xc-sequencia-2);
+  --grafico-mapa-3: var(--xc-sequencia-3);
+  --grafico-mapa-4: var(--xc-sequencia-4);
+  --grafico-mapa-5: var(--xc-sequencia-5);
+}
+
+/* A amostra do Padrão desenhada DENTRO de uma tela que está no tema da clínica: sem este reset
+   ela herdaria as cores do `<html>` e as duas amostras sairiam iguais. O Padrão no `<html>` é a
+   ausência do atributo — este bloco só existe para amostras. */
+[data-tema="padrao"] {
+  --acento: var(--marca-600);
+  --acento-intenso: var(--marca-700);
+  --acento-suave: var(--marca-50);
+  --selecao: var(--marca-100);
+  --foco: var(--marca-600);
+  --destaque: var(--marca-600);
+  --assinatura: none;
+  --botao-primario: var(--marca-600);
+  --botao-primario-hover: var(--marca-700);
+  --sobre-botao-primario: var(--neutro-0);
+  --botao-primario-sombra: 0 0 #0000;
+  --botao-primario-losango: none;
+  --botao-primario-elevacao: 0px;
+  --losango: transparent;
+  --variacao-display: normal;
+  --borda-botao: var(--neutro-450);
+  --raio-botao: 6px;
+  --raio-caixa: 6px;
+  --borda-campo: var(--neutro-450);
+  --linha: var(--neutro-200);
+  --linha-forte: var(--neutro-300);
+  --trilho: var(--neutro-100);
+  --segmento-ativo: var(--marca-600);
+  --segmento-ativo-hover: var(--marca-700);
+  --sobre-segmento-ativo: var(--neutro-0);
+  --cabecalho-tabela: var(--neutro-50);
+  --vazio-icone: var(--neutro-600);
+  --vazio-icone-fundo: transparent;
+  --vazio-icone-respiro: 0px;
+  --fundo: var(--neutro-50);
+  --segmento-ativo-borda: transparent;
+  --raio-trilho: 6px;
+  --avatar-fundo: var(--neutro-100);
+  --hover-de-linha: var(--neutro-100);
+  --neutro-desativado: var(--neutro-100);
+  --chip-de-marca: var(--marca-50);
+  --sobre-chip-de-marca: var(--marca-600);
+  --recuo-fio: 0px;
+  --moldura: var(--neutro-0);
+  --moldura-linha: var(--neutro-200);
+  --moldura-ativo: var(--marca-50);
+  --moldura-hover: var(--neutro-100);
+  --rotulo-de-grupo: var(--neutro-600);
+  --raio-controle: 6px;
+  --raio-campo: 8px;
+  --raio-superficie: 12px;
+  --raio-janela: 16px;
+  --sombra-e1: 0 1px 2px 0 rgb(33 31 27 / 0.05);
+  --sombra-e2: 0 2px 8px -1px rgb(33 31 27 / 0.08), 0 1px 2px 0 rgb(33 31 27 / 0.04);
+  --sombra-e3: 0 16px 40px -8px rgb(33 31 27 / 0.16), 0 4px 12px -2px rgb(33 31 27 / 0.06);
+  --fonte-texto: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fonte-display: "Plus Jakarta Sans Var", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --peso-texto: 400;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --grafico-recessivo: var(--marca-cinza-200);
+  --grafico-mapa-1: var(--marca-sequencia-1);
+  --grafico-mapa-2: var(--marca-sequencia-2);
+  --grafico-mapa-3: var(--marca-sequencia-3);
+  --grafico-mapa-4: var(--marca-sequencia-4);
+  --grafico-mapa-5: var(--marca-sequencia-5);
+}
+
+/* ── Ponte Tailwind v4 — mapeia 1:1 os SEMÂNTICOS em utilitários ── */
+@theme inline {
+  /* cores: o papel vira o nome do utilitário (bg-superficie, text-texto-suave…) */
+  --color-fundo: var(--fundo);
+  --color-superficie: var(--superficie);
+  --color-superficie-elevada: var(--superficie-elevada);
+  --color-texto: var(--texto);
+  --color-texto-suave: var(--texto-suave);
+  --color-texto-desativado: var(--texto-desativado);
+  --color-neutro-desativado: var(--neutro-desativado);
+  --color-linha: var(--linha);
+  --color-linha-forte: var(--linha-forte);
+  --color-borda-campo: var(--borda-campo);
+  --color-acento: var(--acento);
+  --color-acento-intenso: var(--acento-intenso);
+  --color-sobre-acento: var(--sobre-acento);
+  --color-acento-suave: var(--acento-suave);
+  --color-selecao: var(--selecao);
+  --color-foco: var(--foco);
+  --color-destaque: var(--destaque);
+  --color-moldura: var(--moldura);
+  --color-moldura-linha: var(--moldura-linha);
+  --color-moldura-ativo: var(--moldura-ativo);
+  --color-moldura-hover: var(--moldura-hover);
+  --color-rotulo-de-grupo: var(--rotulo-de-grupo);
+  --color-botao-primario: var(--botao-primario);
+  --color-botao-primario-hover: var(--botao-primario-hover);
+  --color-losango: var(--losango);
+  --color-sobre-botao-primario: var(--sobre-botao-primario);
+  --color-borda-botao: var(--borda-botao);
+  --color-trilho: var(--trilho);
+  --color-segmento-ativo: var(--segmento-ativo);
+  --color-segmento-ativo-hover: var(--segmento-ativo-hover);
+  --color-sobre-segmento-ativo: var(--sobre-segmento-ativo);
+  --color-cabecalho-tabela: var(--cabecalho-tabela);
+  --color-vazio-icone: var(--vazio-icone);
+  --color-avatar-fundo: var(--avatar-fundo);
+  --color-hover-de-linha: var(--hover-de-linha);
+  --color-chip-de-marca: var(--chip-de-marca);
+  --color-sobre-chip-de-marca: var(--sobre-chip-de-marca);
+  --color-segmento-ativo-borda: var(--segmento-ativo-borda);
+  --color-vazio-icone-fundo: var(--vazio-icone-fundo);
+  --color-perigo: var(--perigo);
+  --color-perigo-intenso: var(--perigo-intenso);
+  --color-sobre-perigo: var(--sobre-perigo);
+  --color-perigo-texto: var(--perigo-texto);
+  --color-perigo-suave: var(--perigo-suave);
+  --color-sucesso-texto: var(--sucesso-texto);
+  --color-sucesso-suave: var(--sucesso-suave);
+  --color-alerta-texto: var(--alerta-texto);
+  --color-alerta-suave: var(--alerta-suave);
+  --color-info-texto: var(--info-texto);
+  --color-info-suave: var(--info-suave);
+  --color-tooltip: var(--tooltip);
+  --color-sobre-tooltip: var(--sobre-tooltip);
+  --color-neutro-100: var(--neutro-100); /* fundo neutro de peças "desligadas" (indisponível, prioridade baixa); o HOVER de linha virou o
+     papel `hover-de-linha` (change tema-da-clinica) */
+  --color-neutro-200: var(--neutro-200); /* skeleton */
+  --color-grafico-destaque: var(--grafico-destaque);
+  --color-grafico-recessivo: var(--grafico-recessivo);
+  --color-grafico-mapa-1: var(--grafico-mapa-1);
+  --color-grafico-mapa-2: var(--grafico-mapa-2);
+  --color-grafico-mapa-3: var(--grafico-mapa-3);
+  --color-grafico-mapa-4: var(--grafico-mapa-4);
+  --color-grafico-mapa-5: var(--grafico-mapa-5);
+  --color-grafico-sem-dados-contorno: var(--grafico-sem-dados-contorno);
+
+  /* tipografia — papéis com sub-propriedades (text-display, text-corpo…) */
+  /* pelos papéis: um tema de clínica pode trocar a tipografia (change tema-da-clinica) */
+  --font-display: var(--fonte-display);
+  --font-texto: var(--fonte-texto);
+
+  /* fontes da MARCA da clínica (identidade-da-clinica) — stacks LOCAIS, zero download
+     (CSP intacta); o preview mostra a fonte real do navegador do usuário */
+  --fonte-marca-padrao: var(--font-display);
+  --fonte-marca-serifada: Georgia, "Times New Roman", serif;
+  --fonte-marca-arredondada: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", "Segoe UI", sans-serif;
+  --fonte-marca-manuscrita: "Segoe Script", "Snell Roundhand", "Bradley Hand", cursive;
+  --text-display: 1.75rem;      --text-display--line-height: 1.25; --text-display--letter-spacing: -0.015em;
+  --text-titulo: 1.375rem;      --text-titulo--line-height: 1.3;   --text-titulo--letter-spacing: -0.01em;
+  --text-subtitulo: 1.125rem;   --text-subtitulo--line-height: 1.4;
+  --text-corpo-lg: 1rem;        --text-corpo-lg--line-height: 1.5;
+  --text-corpo: 0.875rem;       --text-corpo--line-height: 1.5;
+  --text-rotulo: 0.8125rem;     --text-rotulo--line-height: 1.4;   --text-rotulo--font-weight: var(--font-weight-medium);
+  --text-meta: 0.75rem;         --text-meta--line-height: 1.35;
+
+  /* raio e sombra por papel */
+  --radius-controle: var(--raio-controle);
+  --radius-campo: var(--raio-campo);
+  --radius-superficie: var(--raio-superficie);
+  --spacing-moldura-do-shell: var(--moldura-do-shell);
+  --spacing-respiro-do-shell: var(--respiro-do-shell);
+  --spacing-vazio-icone: var(--vazio-icone-respiro);
+  --spacing-recuo-fio: var(--recuo-fio);
+  --radius-janela: var(--raio-janela);
+  --radius-pilula: var(--raio-pilula);
+  --radius-botao: var(--raio-botao);
+  --radius-caixa: var(--raio-caixa);
+  --radius-trilho: var(--raio-trilho);
+  --radius-marca-de-dado: var(--raio-marca-de-dado);
+  --shadow-e1: var(--sombra-e1);
+  --shadow-e2: var(--sombra-e2);
+  --shadow-e3: var(--sombra-e3);
+  --shadow-botao-primario: var(--botao-primario-sombra);
+
+  /* motion */
+  --ease-padrao: var(--curva-padrao);
+  --ease-saida: var(--curva-saida);
+}
+/* z-index e duração não têm namespace no v4: consumir via z-(--z-menu) e
+   duration-(--duracao-2). z-index inline/arbitrário é PROIBIDO. */
+
+/* ── Base ── */
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--font-texto);
+  font-weight: var(--peso-texto);
+  -webkit-font-smoothing: antialiased;
+}
+/* o título lê os PAPÉIS direto (change tema-xclinicas): `--font-display`, da ponte do Tailwind, é
+   resolvido no `:root` e chega pronto por herança — um `[data-tema]` num elemento (o login, a amostra
+   do tema) não o alcançava, e o título saía na fonte do Padrão. O peso é `--variacao-display`
+   (`normal` no Padrão). */
+h1, h2, h3 { font-family: var(--fonte-display); font-variation-settings: var(--variacao-display); }
+
+/* foco visível universal (2.4.7) — nunca suprimir */
+:focus-visible { outline: 2px solid var(--foco); outline-offset: 2px; }
+
+/* foco nunca escondido sob chrome fixo (2.4.11) */
+[id], [tabindex], a, button, input, select, textarea { scroll-margin-top: 4rem; }
+
+/* entrada de diálogo e painel: fade + escala de 2% em 160ms na curva da casa — presença sem
+   susto. Só `opacity` e `transform`: o `translate` do centrado é outra propriedade no v4, e
+   não é tocado. O bloco de motion reduzido abaixo colapsa isto também. */
+@keyframes entrar-suave {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+@utility animar-entrada {
+  animation: entrar-suave var(--duracao-2) var(--curva-padrao);
+}
+/* janela (diálogo, sheet): §2.11 dá 220ms a janelas e 160ms a menus/painéis */
+@utility animar-entrada-janela {
+  animation: entrar-suave var(--duracao-3) var(--curva-padrao);
+}
+
+/* "SEM DADOS" num gráfico (change indicadores-profissionais): o mês antes de o sistema existir e o
+   horário sem grade não são ZERO — zero é um resultado, e uma coluna vazia mente que a clínica
+   não atendeu. A hachura em 135° (o ângulo da textura da skill de gráficos) diz "aqui não há
+   medida"; o rótulo em texto ao lado diz o porquê, porque a hachura sozinha não chega ao papel. */
+@utility fundo-sem-dados {
+  background-image: repeating-linear-gradient(135deg, var(--grafico-sem-dados-traco) 0 4px, var(--superficie) 4px 8px);
+}
+
+/* CORES FORÇADAS (alto contraste do Windows): o navegador troca todo fundo pela cor do sistema, e os
+   gráficos dos indicadores são FEITOS de fundo de cor — as colunas, as barras e o mapa sumiam
+   (A11Y-IND-08). O desenho fica com as cores dele, numa superfície própria; o que se lê (o valor, o
+   título, a tabela) segue o tema do sistema, porque `data-grafico` marca só o desenho. */
+@media (forced-colors: active) {
+  [data-grafico] {
+    forced-color-adjust: none;
+    background-color: var(--superficie);
+    color: var(--texto);
+  }
+}
+
+/* motion reduzido: colapsa tudo (o “piscar” §6 vira realce estático) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Impressão: só a região marcada vai ao papel — o resto da tela some.
+   Nasceu para o recibo (`data-recibo`) e foi generalizada para `data-impresso` quando os
+   indicadores passaram a imprimir; o recibo migrou junto, era o único consumidor, então
+   não fica alias nem dívida.
+   MEDIDO antes de reusar: tabela de 120 linhas impressa por Chrome headless sai em 4
+   páginas com as 120 linhas presentes e `data-nao-imprimir` fora do papel — a técnica
+   PAGINA, ao contrário do que se suspeitava. (Conferido só no Chrome desta máquina.) */
+@media print {
+  body * { visibility: hidden; }
+  [data-impresso], [data-impresso] * { visibility: visible; }
+  [data-impresso] {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 2rem;
+    background: white;
+    color: black;
+  }
+  [data-nao-imprimir] { display: none !important; }
+  /* os GRÁFICOS dos indicadores (indicadores-profissionais) são feitos de fundo de cor, e o navegador
+     não imprime fundo por padrão: sem isto, as colunas e o mapa de ocupação saíam em branco no
+     papel. Só onde há `data-grafico` — o resto da folha continua economizando tinta. */
+  [data-impresso] [data-grafico], [data-impresso] [data-grafico] * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /*
+    NADA ROLA NO PAPEL — e isto não é enfeite: um contêiner com `overflow` imprime só a
+    parte VISÍVEL, então a tabela larga saía cortada na largura da folha. Medido em PDF por
+    Chromium: o relatório analítico de agendamentos perdia a coluna Status inteira e escrevia
+    "Unimed F" em 140 das 141 linhas; a aba Produtividade perdia a coluna Produtividade. A
+    tela resolve largura com rolagem (o `RoladorHorizontal` e o invólucro da `Tabela`); no
+    papel a régua é a folha, então tudo volta a caber: overflow visível, invólucro de largura
+    máxima (`w-max`) solto, tabela em 100% e célula que QUEBRA em vez de truncar.
+  */
+  [data-impresso] * { overflow: visible !important; }
+  /*
+    Largura AUTOMÁTICA de propósito: com `table-layout: fixed` as colunas repartem a folha em
+    partes iguais e o texto passa a quebrar no meio da palavra — medido no relatório analítico,
+    que saiu com "Especialidad/e" e "Psicopedagog/ia". A tabela que não cabia (Produtividade,
+    780px numa área de 696px) resolve com um degrau de fonte só dela (`print:text-[0.62rem]`),
+    sem estragar as outras seis folhas que já cabiam.
+  */
+  [data-impresso] table { width: 100% !important; font-size: 0.72rem; }
+  /* UMA medida de tipo por tabela no papel: as classes de célula (`text-corpo`, `text-meta`)
+     sobreviviam ao `font-size` da tabela e continuavam ditando a largura mínima — medido: a
+     tabela da Produtividade ficava em 780px mesmo com a tabela a 0,62rem. */
+  [data-impresso] table * { font-size: inherit; }
+  [data-impresso] th,
+  [data-impresso] td {
+    /* `normal` desarma o `truncate`/`nowrap` da tela, que é o que empurrava a coluna para
+       fora da folha. `break-word` só quebra a palavra que NÃO cabe — `anywhere` quebrava
+       toda palavra para minimizar a largura, e os cabeçalhos numéricos da Produtividade
+       saíam em coluna de uma letra ("c c zli l"). Medido nos dois PDFs. */
+    white-space: normal !important;
+    overflow-wrap: break-word;
+  }
+  /* a primeira coluna costuma ser o nome (a mais larga); as numéricas não precisam de mais
+     que o próprio cabeçalho — sem isto o nome come a folha e espreme o resto */
+  [data-impresso] td:first-child,
+  [data-impresso] th:first-child {
+    max-width: 40%;
+  }
+  /* o cabeçalho se repete em cada folha — relatório de 6 páginas sem cabeçalho é ilegível */
+  [data-impresso] thead { display: table-header-group; }
+  [data-impresso] tr { break-inside: avoid; }
+}

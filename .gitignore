@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+
+# Claude Code — config local da máquina (não versionar)
+.claude/settings.local.json
+
+# Material bruto local (duplicado em docs/)
+.claude/sistemadeagendamento/
+
+# Node / Vite (web)
+node_modules/
+dist/
+*.local
+
+# PHP / Laravel (api)
+/vendor/
+/api/vendor/
+/api/storage/*.key
+
+# Ambiente / segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets/
+
+# LGPD — planilhas exportadas do ClinicaÁgil com dados REAIS de pacientes
+# (carga da virada; ficam SÓ nesta máquina — jamais commitar)
+dados-da-virada/
+*.xlsx
+*.xls
+
+# Python (bytecode do preparador da virada — SEC-IV-01)
+__pycache__/
+
+# respostas da clínica (dado real da NeuroKids — nunca commitar)
+respostas-neurokids-*.pdf
+
+# esboços do brainstorming visual (servidor local do superpowers)
+.superpowers/

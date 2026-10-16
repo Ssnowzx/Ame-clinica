@@ -1,0 +1,12 @@
+.git
+**/node_modules
+api/vendor
+api/.env
+api/.env.*
+!api/.env.example
+api/storage/logs/*
+api/storage/framework/*/*
+web/dist
+dados-da-virada
+deploy/.env
+api/bootstrap/cache/*.php

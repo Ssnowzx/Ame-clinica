@@ -1,0 +1,56 @@
+# Ame Clínica — production stack. Fully isolated from any other stack on the same host:
+# own project name, containers, network, volumes and loopback port.
+#
+#   cp deploy/env.prod.example deploy/.env   # fill in the secrets
+#   docker compose -f deploy/docker-compose.prod.yml --env-file deploy/.env up -d --build
+name: ame
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: ame-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      # Must be REAL process env (not only api/.env): bootstrap/app.php reads TRUSTED_PROXIES
+      # before Laravel loads dotenv.
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      DB_HOST: db
+      DB_PORT: 3306
+    ports:
+      - "127.0.0.1:${APP_PORT:-8090}:80"
+    volumes:
+      - ame_storage:/var/www/api/storage/app
+
+  db:
+    image: mariadb:11
+    container_name: ame-db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ame_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+networks:
+  default:
+    name: ame_net
+    ipam:
+      config:
+        - subnet: 172.31.90.0/24
+
+volumes:
+  ame_db_data:
+  ame_storage:

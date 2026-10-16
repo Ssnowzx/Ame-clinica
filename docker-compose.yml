@@ -1,0 +1,27 @@
+# ame-clinica — infraestrutura local (§3 da especificação: Docker SÓ para o banco;
+# Laravel e Vite rodam nativos). Porta 3312 no host — 3306–3311 já são usadas por
+# outros serviços nesta máquina (mysqld nativo, cursoc-db, fertways-mariadb).
+services:
+  db:
+    image: mariadb:11
+    container_name: ame-clinica-db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-ame_root_local}
+      MARIADB_DATABASE: ${DB_DATABASE:-ame_clinica}
+      MARIADB_USER: ${DB_USERNAME:-ame}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-ame_local}
+    ports:
+      # bind só em loopback (parecer de segurança T-db-01): banco nunca exposto na rede local
+      - "127.0.0.1:${DB_PORT:-3312}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mariadb/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  db_data:

@@ -1,0 +1,170 @@
+{
+    "relatorios": [
+        {
+            "slug": "agendamentos",
+            "titulo": "Agendamentos",
+            "permissoes": [
+                "agenda.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": true
+        },
+        {
+            "slug": "movimentacao-da-agenda",
+            "titulo": "Movimentação da agenda",
+            "permissoes": [
+                "auditoria.ver",
+                "agenda.ver"
+            ],
+            "eixo": null,
+            "expoe_nome": true
+        },
+        {
+            "slug": "pacientes",
+            "titulo": "Pacientes",
+            "permissoes": [
+                "pacientes.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": true
+        },
+        {
+            "slug": "extrato-do-paciente",
+            "titulo": "Extrato do paciente",
+            "permissoes": [
+                "lancamentos.ver",
+                "agenda.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": true
+        },
+        {
+            "slug": "atendimentos",
+            "titulo": "Atendimentos",
+            "permissoes": [
+                "atendimentos.ver"
+            ],
+            "eixo": "clinico",
+            "expoe_nome": true
+        },
+        {
+            "slug": "lista-de-presenca",
+            "titulo": "Lista de presença",
+            "permissoes": [
+                "agenda.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": true
+        },
+        {
+            "slug": "evolucoes",
+            "titulo": "Evoluções",
+            "permissoes": [
+                "evolucoes.ver",
+                "atendimentos.ver"
+            ],
+            "eixo": "clinico",
+            "expoe_nome": true
+        },
+        {
+            "slug": "sessoes-dos-tratamentos",
+            "titulo": "Sessões dos tratamentos",
+            "permissoes": [
+                "tratamentos.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": true
+        },
+        {
+            "slug": "tratamentos-sem-lancamento",
+            "titulo": "Tratamentos sem lançamento",
+            "permissoes": [
+                "tratamentos.ver",
+                "lancamentos.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": true
+        },
+        {
+            "slug": "servicos",
+            "titulo": "Serviços",
+            "permissoes": [
+                "tratamentos.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": false
+        },
+        {
+            "slug": "recebido-por-profissional",
+            "titulo": "Recebido por profissional",
+            "permissoes": [
+                "repasse.ver",
+                "lancamentos.ver",
+                "tratamentos.ver"
+            ],
+            "eixo": "agenda",
+            "expoe_nome": true
+        },
+        {
+            "slug": "fechamento-de-caixa",
+            "titulo": "Fechamento de caixa",
+            "permissoes": [
+                "lancamentos.ver",
+                "fluxo_caixa.ver"
+            ],
+            "eixo": null,
+            "expoe_nome": true
+        },
+        {
+            "slug": "dre-gerencial",
+            "titulo": "DRE gerencial",
+            "permissoes": [
+                "lancamentos.ver",
+                "fluxo_caixa.ver"
+            ],
+            "eixo": null,
+            "expoe_nome": false
+        },
+        {
+            "slug": "contas-em-aberto",
+            "titulo": "Contas a pagar e a receber",
+            "permissoes": [
+                "lancamentos.ver",
+                "fluxo_caixa.ver"
+            ],
+            "eixo": null,
+            "expoe_nome": true
+        },
+        {
+            "slug": "recebido-e-pago",
+            "titulo": "Recebido e pago",
+            "permissoes": [
+                "lancamentos.ver",
+                "fluxo_caixa.ver"
+            ],
+            "eixo": null,
+            "expoe_nome": true
+        },
+        {
+            "slug": "vendas-do-periodo",
+            "titulo": "Vendas do período",
+            "permissoes": [
+                "lancamentos.ver",
+                "fluxo_caixa.ver",
+                "tratamentos.ver"
+            ],
+            "eixo": null,
+            "expoe_nome": true
+        },
+        {
+            "slug": "movimentacao-do-financeiro",
+            "titulo": "Movimentação do financeiro",
+            "permissoes": [
+                "auditoria.ver",
+                "lancamentos.ver"
+            ],
+            "eixo": null,
+            "expoe_nome": true
+        }
+    ]
+}
